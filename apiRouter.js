@@ -8,7 +8,9 @@ exports.router = (function(){
 
     // Differents corona routes that my api offers
     apiRouter.route("/corona/countriesList").get(coronaCtrler.countriesList);
-    apiRouter.route("/corona/countryInfo").post(coronaCtrler.countriesList);
+    apiRouter.route("/corona/countriesInfo").get(coronaCtrler.countriesInfo);
+
+    apiRouter.route("/corona/countryInfo").post(coronaCtrler.countryInfo);
     apiRouter.route("/corona/ivoryCoastInfo/").get(coronaCtrler.ivoryCoastInfo);
 
     
