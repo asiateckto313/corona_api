@@ -1,0 +1,25 @@
+{
+  "name": "corona_cases",
+  "version": "1.0.0",
+  "description": "A Js script running on node to show the corona virus cases",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "corona",
+    "virus"
+  ],
+  "author": "Paul-Marie TATI",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2",
+    "timers": "^0.1.1"
+  }
+}
