@@ -15,6 +15,7 @@
   "author": "Paul-Marie TATI",
   "license": "ISC",
   "dependencies": {
+    "artillery": "^1.6.0",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
     "covid19-data": "^1.0.0",

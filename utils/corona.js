@@ -2,70 +2,11 @@ const URL = "https://www.worldometers.info/coronavirus/";
 const {exec} = require("child_process");
 let request = require("request"),cheerio = require('cheerio');
 
-async function getCoronaIvoryCoastInfo(req,res){
-    request(URL, function(error, response, html){
-        // First we'll check to make sure no errors occurred when making the request
 
-        if(!error){
-        // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
-        let $ = cheerio.load(html);
-
-        // Finally, we'll define the variables we're going to capture
-
-        let json = {country:"", total_cases:"", new_cases:"", total_deaths:"",	new_deaths:"",	total_recovered:""};
-
-        $('#main_table_countries_today > tbody:nth-child(2) > tr:nth-child(95)').filter(function(){
-            //normalement nous sommes sur la ligne Ivory Coast
-            // Let's store the data we filter into a variable so we can easily see what's going on.
-
-            let data = $(this),
-            children = data.children();
-            children.each(function(i,elem){
-                switch(i){
-                    case 0 : json.country = $(this).text().trim()
-                    break;
-
-                    case 1 : json.total_cases = $(this).text().trim()
-                    break;
-
-                    case 2 : json.new_cases = $(this).text().trim()
-                    break;
-
-                    case 3 : json.total_deaths = $(this).text().trim()
-                    break;
-
-                    case 4 : json.new_deaths = $(this).text().trim()
-                    break;
-
-                    case 5 : json.total_recovered = $(this).text().trim()
-                    break;
-                    
-                }
-            })
-
-                    
-        })
-        if(json.country == ""){
-            //The json object is empty
-            console.log("ivoryCoastInfo invoked empty");
-            return res.status(200).json({'error': true,'error_msg':"Empty json object",'data':json});
-        }else{
-            //The json object is not empty
-            console.log("ivoryCoastInfo invoked");
-            return res.status(200).json({'error': false,'data':json});
-
-        }
-        
-    }
-})
-
-    await new Promise((resolve, reject) => setTimeout(resolve, 50));
-
-}
 async function countriesList(req,res){
     request(URL, function(error, response, html){
         // First we'll check to make sure no errors occurred when making the request
+        console.log("error = ",error);
 
         if(!error){
         // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
@@ -197,21 +138,45 @@ async function countryInfo(req,res,countryToSearch){
                     }
                     
                 })
-                //Le pays entré ne se trouve pas dans la liste
-                console.log("countryInfo not found invoked")
-                return res.status(200).json({'error':false,'data':' country not found'})
+                if(tmp == undefined){
+                    //Le pays entré ne se trouve pas dans la liste
+                    console.log("countryInfo not found invoked")
+                    return res.status(200).json({'error':false,'data':' country not found'})
+                
+                }
                 
             })
+
+            //return res.status(400).json({'error':true,'error_msg':'Bad Request'})
         
         }else{
             console.log("countryInfo error invoked")
             return res.status(500).json({'error':true,'error_msg':'Internal problem occured'})
         }
+        
+
     })
 }
+
+async function countryInfo2(countryToSearch){
+    let json_tmp;
+    request(URL, function(error, response, html){
+        // First we'll check to make sure no errors occurred when making the request
+        if(error)
+            console.error('error:', error); // Print the error if one occurred
+
+        if(html){
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log('on a un body'); // Print the HTML for the Google homepage.
+
+        }
+            
+    })
+}
+
 module.exports = {
-    getCoronaIvoryCoastInfo,
     countriesInfo,
     countriesList,
-    countryInfo
+    countryInfo,
+    countryInfo2
 }
