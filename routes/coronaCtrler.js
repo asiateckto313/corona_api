@@ -23,7 +23,7 @@ module.exports = {
             coronaUtils.countryInfo(req,res,countryToSearch)
         }
     },
-    countryInfo2 :  function(req, res){
+    ivoryCoastInfo :  function(req, res){
         //Want to know the corona info about a specific country
         let params = queryString.parse(url.parse(req.url).query),
         countryToSearch = params['country'];
@@ -31,7 +31,7 @@ module.exports = {
         if(countryToSearch == undefined || countryToSearch == "")
             return res.status(400).json({'error':true,'error_msg':'country to search is missing'})
         else{
-            coronaUtils.countryInfo2(countryToSearch)
+            coronaUtils.ivoryCoastInfo(req, res, countryToSearch)
         }
     }
   

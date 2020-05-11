@@ -12,7 +12,7 @@ exports.router = (function(){
     apiRouter.route("/corona/countryInfo").get(coronaCtrler.countryInfo);
 
     apiRouter.route("/corona/countryInfo").post(coronaCtrler.countryInfo);
-
+    apiRouter.route("/corona/ivoryCoastInfo").get(coronaCtrler.ivoryCoastInfo)
     
     return apiRouter;
 })();
