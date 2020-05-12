@@ -205,8 +205,8 @@ async function ivoryCoastInfo(req, res, countryToSearch){
                             })
                         if(i == 3){
                             global_information.push({
-                                deaths:tmp[2].trim(),
-                                new_deaths: tmp[2].trim().split(' ')[2]
+                                deaths:tmp[2].trim().split(' ')[0],
+                                new_deaths: tmp[2].trim().split(' ')[4]
                             })
                         
                         }
