@@ -24,15 +24,20 @@ module.exports = {
         }
     },
     ivoryCoastInfo :  function(req, res){
-        //Want to know the corona info about a specific country
-        let params = queryString.parse(url.parse(req.url).query),
-        countryToSearch = params['country'];
-        console.log("params = ",countryToSearch)
-        if(countryToSearch == undefined || countryToSearch == "")
-            return res.status(400).json({'error':true,'error_msg':'country to search is missing'})
-        else{
-            coronaUtils.ivoryCoastInfo(req, res, countryToSearch)
+        try {
+            let params = queryString.parse(url.parse(req.url).query),
+            countryToSearch = params['country'], typeOfInfo = params['typeOfInfo'];
+            console.log("params = ",countryToSearch,"\t",typeOfInfo)
+            if(countryToSearch == undefined || countryToSearch == "")
+                return res.status(400).json({'error':true,'error_msg':'country to search is missing'})
+            else{
+                coronaUtils.ivoryCoastInfo(req, res,typeOfInfo.toLocaleLowerCase() ,countryToSearch)
+            }
+        } catch (e) {
+            res.status(500).json({'error':true,'error_msg':e})
         }
+        //Want to know the corona info about a specific country
+       
     }
   
 }

@@ -13,6 +13,8 @@ exports.router = (function(){
 
     apiRouter.route("/corona/countryInfo").post(coronaCtrler.countryInfo);
     apiRouter.route("/corona/ivoryCoastInfo").get(coronaCtrler.ivoryCoastInfo)
+    apiRouter.route("/corona/ivoryCoastInfo").post(coronaCtrler.ivoryCoastInfo)
+
     
     return apiRouter;
 })();
