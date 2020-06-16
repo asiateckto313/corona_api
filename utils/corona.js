@@ -34,10 +34,16 @@ globalInfo =  async function(URL){
             loaded_page('body > div.app-admin-wrap.layout-sidebar-large > div.main-content-wrap.sidenav-open.d-flex.flex-column > div > div:nth-child(3)').filter(function(){
             //We're going to put the cursor on the first line of the array
             // Let's store the data we filter into a variable so we can easily see what's going on.
+            
             let data = loaded_page(this),tmp,
             children = data.children();
+            //console.log("children = ",children.length)
+        
             children.each(function(i,elem){
-                tmp = loaded_page(this).text().trim().split("\n")
+                //console.log("elem = ",elem.children[0])
+                //console.log('this = ',this.children)
+                tmp = loaded_page(elem).text().trim().split("\n")
+                console.log("tmp = ",tmp)
                 if(i == 0){
                     json_object.confirmed_cases_or_total_cases += tmp[2].trim().split(' ')[0]
                     json_object.new_cases += tmp[2].trim().split(' ')[2]  
@@ -53,14 +59,17 @@ globalInfo =  async function(URL){
                         json_object.deaths += tmp[2].trim().split(' ')[0]
                         json_object.new_deaths += tmp[2].trim().split(' ')[4]
                 }
-                    return false;
                 
+                resolve(json_object)                
                 //Do not consider the 4th position after the return
             })
-            resolve(json_object)
+
             })
-        }else
+        }else{
+            console.log("reject error")
             reject("Error")
+        }
+            
     })
 // })
 },
@@ -115,6 +124,8 @@ info_about_cities = async function(URL){
                 let data = loaded_page(this),tmp,
                 children = data.children();
                 children.each(function(i,elem){
+                    if(i == 7){let tmp = loaded_page(this).text().trim().split('\n')[0].split(' ')
+                    town.push({name:tmp[0]+' '+tmp[1],infected_case_number:tmp[2]})}
                     if(i !==24){
                         //we are going to store now informations about cities
                         let tmp = loaded_page(this).text().trim().split('\n')[0].split(' ')
@@ -122,6 +133,7 @@ info_about_cities = async function(URL){
                     }
                 })
                 //console.log("towns = ",town)
+                resolve(town)
 
             })
         })

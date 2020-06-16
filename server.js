@@ -2,6 +2,7 @@ const  PORT = 4000;
 const fs = require('fs'); //Maybe to write what I scraped as an output in a json file
 
 let app = require("express")(),
+    path = require("path"),
     server = require("http").createServer(app),
     bodyParser = require("body-parser"),
     apiRouter = require("./apiRouter").router;
@@ -18,6 +19,10 @@ app.get("/",function(req,res){
     return res.status(200)
     //TODO make an index.html to render for listing the services supported and how to use them(the syntax)
     .json({'error':false, 'data':'Bienvenu(e) sur notre API, appelez un service en utilisant la syntaxe suivante : adresseServer/api/corona/nomService'})
+})
+
+app.get('/test_vue', function(req, res){
+    res.sendFile(path.join(__dirname+'/index.html'));
 })
 
 
